@@ -28,5 +28,10 @@
   "host_permissions": [
     "https://x.com/*",
     "https://twitter.com/*"
-  ]
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "svin.mail.24@gmail.com"
+    }
+  }
 }
