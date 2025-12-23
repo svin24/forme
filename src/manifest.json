@@ -29,6 +29,9 @@
     "https://x.com/*",
     "https://twitter.com/*"
   ],
+  "permissions": [
+    "storage"
+  ],
   "browser_specific_settings": {
     "gecko": {
       "id": "svin.mail.24@gmail.com",
