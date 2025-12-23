@@ -30,9 +30,6 @@ body {
   justify-content: space-between;
   gap: 12px;
   margin: 0 0 14px;
-  padding: 10px 12px;
-  border: 1px solid currentColor;
-  border-radius: 10px;
 }
 
 .feature-text {
