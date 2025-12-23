@@ -1,43 +1,47 @@
 (() => {
-  const STORAGE_KEY = "enableFollowingDefault";
-  const toggle = document.getElementById("toggle-following");
-
-  if (!toggle) {
-    return;
-  }
+  const toggles = [
+    {
+      key: "enableFollowingDefault",
+      id: "toggle-following",
+      defaultValue: true,
+    },
+    {
+      key: "hideWhatsHappening",
+      id: "toggle-whats-happening",
+      defaultValue: false,
+    },
+  ];
 
   const storage =
     (typeof chrome !== "undefined" && chrome.storage && chrome.storage.local) ||
     (typeof browser !== "undefined" && browser.storage && browser.storage.local);
 
+  if (!storage) {
+    return;
+  }
+
   const getStoredValue = () => {
-    if (!storage) {
-      return Promise.resolve(undefined);
-    }
     try {
-      const maybePromise = storage.get(STORAGE_KEY);
+      const maybePromise = storage.get(toggles.map((item) => item.key));
       if (maybePromise && typeof maybePromise.then === "function") {
-        return maybePromise.then((result) => result[STORAGE_KEY]);
+        return maybePromise.then((result) => result);
       }
     } catch (error) {
-      return Promise.resolve(undefined);
+      return Promise.resolve({});
     }
     return new Promise((resolve) => {
-      storage.get(STORAGE_KEY, (result) => {
+      storage.get(toggles.map((item) => item.key), (result) => {
         if (typeof chrome !== "undefined" && chrome.runtime?.lastError) {
-          resolve(undefined);
+          resolve({});
           return;
         }
-        resolve(result[STORAGE_KEY]);
+        resolve(result);
       });
     });
   };
 
-  const setStoredValue = (value) => {
-    if (!storage) {
-      return;
-    }
-    const payload = { [STORAGE_KEY]: value };
+  const setStoredValue = (key, value) => {
+    const payload = { [key]: value };
     try {
       const maybePromise = storage.set(payload);
       if (maybePromise && typeof maybePromise.then === "function") {
@@ -48,11 +52,25 @@
     }
   };
 
-  getStoredValue().then((value) => {
-    toggle.checked = value !== false;
+  getStoredValue().then((values) => {
+    toggles.forEach((item) => {
+      const toggle = document.getElementById(item.id);
+      if (!toggle) {
+        return;
+      }
+      const storedValue = values[item.key];
+      toggle.checked =
+        typeof storedValue === "boolean" ? storedValue : item.defaultValue;
+    });
   });
 
-  toggle.addEventListener("change", () => {
-    setStoredValue(toggle.checked);
+  toggles.forEach((item) => {
+    const toggle = document.getElementById(item.id);
+    if (!toggle) {
+      return;
+    }
+    toggle.addEventListener("change", () => {
+      setStoredValue(item.key, toggle.checked);
+    });
   });
 })();
