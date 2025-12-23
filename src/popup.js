@@ -10,6 +10,11 @@
       id: "toggle-whats-happening",
       defaultValue: false,
     },
+    {
+      key: "hideNotificationBadge",
+      id: "toggle-hide-notification-badge",
+      defaultValue: false,
+    },
   ];
 
   const storage =
