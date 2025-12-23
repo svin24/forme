@@ -5,11 +5,16 @@ body {
 }
 
 body {
+  --toggle-anim: 0s;
   min-width: 240px;
   max-width: 280px;
   padding: 16px;
   color: #000;
   background: #fff;
+}
+
+.ready {
+  --toggle-anim: 0.2s;
 }
 
 .title {
@@ -66,7 +71,8 @@ body {
   height: 22px;
   border: 2px solid currentColor;
   border-radius: 999px;
-  transition: background 0.2s ease, border-color 0.2s ease;
+  transition: background var(--toggle-anim) ease,
+    border-color var(--toggle-anim) ease;
   position: relative;
   box-sizing: border-box;
 }
@@ -80,7 +86,15 @@ body {
   left: 2px;
   border-radius: 50%;
   background: currentColor;
-  transition: transform 0.2s ease;
+  transition: transform var(--toggle-anim) ease;
+}
+
+.switch input:checked + .slider {
+  background: currentColor;
+}
+
+.switch input:checked + .slider::after {
+  background: #fff;
 }
 
 .switch input:checked + .slider::after {
@@ -104,6 +118,10 @@ body {
 @media (prefers-color-scheme: dark) {
   body {
     color: #fff;
+    background: #000;
+  }
+
+  .switch input:checked + .slider::after {
     background: #000;
   }
 

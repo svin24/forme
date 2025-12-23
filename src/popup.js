@@ -67,6 +67,11 @@
       toggle.checked =
         typeof storedValue === "boolean" ? storedValue : item.defaultValue;
     });
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        document.body.classList.add("ready");
+      });
+    });
   });
 
   toggles.forEach((item) => {
