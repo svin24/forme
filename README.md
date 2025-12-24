@@ -2,6 +2,11 @@
 
 Simple browser extension that defaults X/Twitter to the Following tab.
 
+# Links
+
+* [Chrome Web Store](https://chromewebstore.google.com/detail/ibpodnblkdgggfljpenplhjljboglhph?utm_source=item-share-cb)
+* Firefox(waiting for review)
+
 ## Files
 - `manifest.json` Extension manifest (MV3).
 - `content.js` Content script that runs on x.com and twitter.com.
